@@ -7,8 +7,9 @@ import Header from './components/Header'
 function App() {
   return (
     <>
+    
       <Header />
-      <main style={{ padding: '20px' }}>
+      <main style={{ padding: '0px' }}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/product/:id" element={<Product />} />
