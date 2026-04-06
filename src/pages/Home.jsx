@@ -1,26 +1,76 @@
 import { useState, useEffect } from 'react';
-import { getProducts } from '../services/api';
+import { getProducts, getCategories } from '../services/api';
 import ProductCard from '../components/ProductCard';
+
+const categoryTranslations = {
+  'beauty': 'Косметика',
+  'fragrances': 'Парфюмерия',
+  'furniture': 'Мебель',
+  'groceries': 'Продукты',
+  'home-decoration': 'Декор',
+  'kitchen-accessories': 'Кухонные принадлежности',
+  'laptops': 'Ноутбуки',
+  'mens-shirts': 'Мужские рубашки',
+  'mens-shoes': 'Мужская обувь',
+  'mens-watches': 'Мужские часы',
+  'mobile-accessories': 'Аксессуары для телефонов',
+  'motorcycle': 'Мотоциклы',
+  'skin-care': 'Уход за кожей',
+  'smartphones': 'Смартфоны',
+  'sports-accessories': 'Спортивные аксессуары',
+  'sunglasses': 'Солнцезащитные очки',
+  'tablets': 'Планшеты',
+  'tops': 'Верхняя одежда',
+  'vehicle': 'Транспорт',
+  'womens-bags': 'Женские сумки',
+  'womens-dresses': 'Женские платья',
+  'womens-jewellery': 'Украшения',
+  'womens-shoes': 'Женская обувь',
+  'womens-watches': 'Женские часы'
+};
+
+const translateCategory = (category) => {
+  return categoryTranslations[category] || category;
+};
 
 function Home() {
   const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const loadProducts = async () => {
+    const loadData = async () => {
       try {
-        const data = await getProducts();
-        setProducts(data);
+        const [productsData, categoriesData] = await Promise.all([
+          getProducts(),
+          getCategories()
+        ]);
+        setProducts(productsData);
+        setFilteredProducts(productsData);
+        setCategories(['Все', ...categoriesData]);
         setLoading(false);
       } catch (err) {
-        setError('Не удалось загрузить товары');
+        setError('Не удалось загрузить данные');
         setLoading(false);
       }
     };
     
-    loadProducts();
+    loadData();
   }, []);
+
+  useEffect(() => {
+    if (selectedCategory === '' || selectedCategory === 'Все') {
+      setFilteredProducts(products);
+    } else {
+      const filtered = products.filter(
+        product => product.category === selectedCategory
+      );
+      setFilteredProducts(filtered);
+    }
+  }, [selectedCategory, products]);
 
   if (loading) {
     return (
@@ -37,37 +87,64 @@ function Home() {
       </div>
     );
   }
+
   return (
-  <div style={{ 
-    backgroundColor: 'rgb(180, 186, 192)',  // ← темный фон всей страницы
-    minHeight: '100vh',                     // ← на всю высоту экрана
-    padding: '10px 80px'                   // ← отступы от краев
-  }}>
-    <h1 style={{ 
-      textAlign: 'center', 
-      marginBottom: '30px',
-      color: '#f5f1f1',                        // ← белый заголовок (чтобы видно было)
-      fontSize: '40px'
-    }}>
-      
-    </h1>
-    
     <div style={{ 
-      display: 'flex', 
-      flexWrap: 'wrap', 
-      justifyContent: 'center',
-      backgroundColor: 'rgb(210, 219, 229)', // ← светлый фон под карточками
-      borderRadius: '24px',                  // ← скругленные углы
-      padding: '20px',                      // ← отступы внутри
-      maxWidth: '1400px',                   // ← ограничиваем ширину
-      margin: '0 auto'                      // ← центрируем блок
+      backgroundColor: 'rgb(180, 186, 192)',
+      minHeight: '100vh',
+      padding: '40px 0'
     }}>
-      {products.map(product => (
-        <ProductCard key={product.id} product={product} />
-      ))}
+      <h1 style={{ 
+        textAlign: 'center', 
+        marginBottom: '30px',
+        color: '#f5f1f1',
+        fontSize: '40px'
+      }}>
+        Товары
+      </h1>
+      
+      <div style={{ 
+        display: 'flex', 
+        flexWrap: 'wrap', 
+        justifyContent: 'center', 
+        gap: '10px',
+        marginBottom: '30px',
+        padding: '0 20px'
+      }}>
+        {categories.map(category => (
+          <button
+            key={category}
+            onClick={() => setSelectedCategory(category)}
+            style={{
+              padding: '8px 16px',
+              backgroundColor: selectedCategory === category ? '#2c3e50' : '#6a918a',
+              color: 'white',
+              border: 'none',
+              borderRadius: '20px',
+              cursor: 'pointer'
+            }}
+          >
+            {translateCategory(category)}
+          </button>
+        ))}
+      </div>
+      
+      <div style={{ 
+        display: 'flex', 
+        flexWrap: 'wrap', 
+        justifyContent: 'center',
+        backgroundColor: 'rgb(210, 219, 229)',
+        borderRadius: '24px',
+        padding: '20px',
+        maxWidth: '1400px',
+        margin: '0 auto'
+      }}>
+        {filteredProducts.map(product => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+      </div>
     </div>
-  </div>
-);
+  );
 }
 
 export default Home;
