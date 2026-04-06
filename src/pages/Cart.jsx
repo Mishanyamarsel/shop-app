@@ -1,4 +1,5 @@
 import { useCart } from '../context/CartContext';
+import { Link } from 'react-router-dom';  // ← ДОБАВИТЬ ЭТОТ ИМПОРТ
 
 function Cart() {
   const { 
@@ -31,16 +32,24 @@ function Cart() {
           borderBottom: '1px solid #ddd',
           padding: '20px 0'
         }}>
-          <img 
-            src={item.thumbnail || item.images?.[0] || item.image} 
-            alt={item.title} 
-            style={{ width: '80px', height: '80px', objectFit: 'contain' }}
-          />
+          {/* КАРТИНКА С ССЫЛКОЙ */}
+          <Link to={`/product/${item.id}`}>
+            <img 
+              src={item.thumbnail || item.images?.[0] || item.image} 
+              alt={item.title} 
+              style={{ width: '80px', height: '80px', objectFit: 'contain', cursor: 'pointer' }}
+            />
+          </Link>
+          
+          {/* НАЗВАНИЕ С ССЫЛКОЙ */}
           <div style={{ flex: 1 }}>
-            <h3 style={{ fontSize: '16px' }}>{item.title}</h3>
+            <Link to={`/product/${item.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+              <h3 style={{ cursor: 'pointer' }}>{item.title}</h3>
+            </Link>
             <p style={{ fontWeight: 'bold' }}>${item.price}</p>
           </div>
           
+          {/* КНОПКИ УПРАВЛЕНИЯ (без изменений) */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <button 
               onClick={() => decreaseQuantity(item.id)}
