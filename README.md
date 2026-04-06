@@ -1,16 +1,58 @@
-# React + Vite
+# 🛍️ Интернет-магазин на React
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Простой интернет-магазин с корзиной товаров, фильтрацией и адаптивным дизайном.
 
-Currently, two official plugins are available:
+🔗 **GitHub:** [Mishanyamarsel/shop-app](https://github.com/Mishanyamarsel/shop-app)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🚀 Функционал
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Просмотр списка товаров с карточками
+- Фильтрация товаров по категориям
+- Страница товара с подробным описанием
+- Добавление товаров в корзину
+- Изменение количества товаров в корзине
+- Удаление товаров из корзины
+- Подсчет общей суммы
+- Сохранение корзины после перезагрузки страницы (localStorage)
+- Адаптивный дизайн (компьютеры, планшеты, телефоны)
+- Анимация карточек при наведении
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠 Технологии
+
+- **React 18** — библиотека для UI
+- **React Router DOM v6** — маршрутизация
+- **Context API** — управление состоянием корзины
+- **Axios** — HTTP-запросы к API
+- **localStorage** — сохранение корзины
+- **CSS-in-JS** — стилизация через инлайн-стили
+
+---
+
+## 📦 API
+
+Используется бесплатное тестовое API [DummyJSON](https://dummyjson.com/products)
+
+- Получение списка товаров: `GET /products`
+- Получение одного товара: `GET /products/:id`
+- Получение категорий: `GET /products/categories`
+
+---
+
+## 🖥️ Установка и запуск
+
+```bash
+# Клонировать репозиторий
+git clone https://github.com/Mishanyamarsel/shop-app.git
+
+# Перейти в папку проекта
+cd shop-app
+
+# Установить зависимости
+npm install
+
+# Запустить проект
+npm run dev
