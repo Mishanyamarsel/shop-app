@@ -1,19 +1,19 @@
-import { useCart } from '../context/CartContext';
-import { Link } from 'react-router-dom';  // ← ДОБАВИТЬ ЭТОТ ИМПОРТ
+import { useCart } from "../context/CartContext";
+import { Link } from "react-router-dom";
 
 function Cart() {
-  const { 
-    cartItems, 
-    removeFromCart, 
-    increaseQuantity, 
-    decreaseQuantity, 
+  const {
+    cartItems,
+    removeFromCart,
+    increaseQuantity,
+    decreaseQuantity,
     clearCart,
-    getTotalPrice 
+    getTotalPrice,
   } = useCart();
 
   if (cartItems.length === 0) {
     return (
-      <div style={{ textAlign: 'center', padding: '50px' }}>
+      <div style={{ textAlign: "center", padding: "50px" }}>
         <h2>Корзина пуста</h2>
         <p>Добавьте товары из магазина</p>
       </div>
@@ -21,79 +21,90 @@ function Cart() {
   }
 
   return (
-    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
+    <div style={{ maxWidth: "800px", margin: "0 auto", padding: "20px" }}>
       <h1>Корзина</h1>
-      
-      {cartItems.map(item => (
-        <div key={item.id} style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '20px',
-          borderBottom: '1px solid #ddd',
-          padding: '20px 0'
-        }}>
-          {/* КАРТИНКА С ССЫЛКОЙ */}
+
+      {cartItems.map((item) => (
+        <div
+          key={item.id}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "20px",
+            borderBottom: "1px solid #ddd",
+            padding: "20px 0",
+            flexWrap: "wrap",
+          }}
+        >
           <Link to={`/product/${item.id}`}>
-            <img 
-              src={item.thumbnail || item.images?.[0] || item.image} 
-              alt={item.title} 
-              style={{ width: '80px', height: '80px', objectFit: 'contain', cursor: 'pointer' }}
+            <img
+              src={item.thumbnail || item.images?.[0] || item.image}
+              alt={item.title}
+              style={{
+                width: "80px",
+                height: "80px",
+                objectFit: "contain",
+                cursor: "pointer",
+              }}
             />
           </Link>
-          
-          {/* НАЗВАНИЕ С ССЫЛКОЙ */}
-          <div style={{ flex: 1 }}>
-            <Link to={`/product/${item.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-              <h3 style={{ cursor: 'pointer' }}>{item.title}</h3>
+
+          <div style={{ flex: 1, minWidth: "150px" }}>
+            <Link
+              to={`/product/${item.id}`}
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              <h3 style={{ cursor: "pointer", fontSize: "16px" }}>
+                {item.title}
+              </h3>
             </Link>
-            <p style={{ fontWeight: 'bold' }}>${item.price}</p>
+            <p style={{ fontWeight: "bold" }}>${item.price}</p>
           </div>
-          
-          {/* КНОПКИ УПРАВЛЕНИЯ (без изменений) */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <button 
+
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <button
               onClick={() => decreaseQuantity(item.id)}
-              style={{ padding: '5px 10px', cursor: 'pointer' }}
+              style={{ padding: "5px 10px", cursor: "pointer" }}
             >
               -
             </button>
             <span>{item.quantity}</span>
-            <button 
+            <button
               onClick={() => increaseQuantity(item.id)}
-              style={{ padding: '5px 10px', cursor: 'pointer' }}
+              style={{ padding: "5px 10px", cursor: "pointer" }}
             >
               +
             </button>
           </div>
-          
-          <button 
+
+          <button
             onClick={() => removeFromCart(item.id)}
-            style={{ 
-              padding: '5px 10px', 
-              backgroundColor: '#e74c3c', 
-              color: 'white',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer'
+            style={{
+              padding: "5px 10px",
+              backgroundColor: "#e74c3c",
+              color: "white",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer",
             }}
           >
             Удалить
           </button>
         </div>
       ))}
-      
-      <div style={{ marginTop: '30px', textAlign: 'right' }}>
+
+      <div style={{ marginTop: "30px", textAlign: "right" }}>
         <h2>Итого: ${getTotalPrice().toFixed(2)}</h2>
-        <button 
+        <button
           onClick={clearCart}
-          style={{ 
-            marginTop: '20px',
-            padding: '10px 20px',
-            backgroundColor: '#2c3e50',
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer'
+          style={{
+            marginTop: "20px",
+            padding: "10px 20px",
+            backgroundColor: "#2c3e50",
+            color: "white",
+            border: "none",
+            borderRadius: "4px",
+            cursor: "pointer",
           }}
         >
           Очистить корзину

@@ -22,7 +22,6 @@ export const getProductById = async (id) => {
   }
 };
 
-// Просто возвращаем уникальные категории из товаров
 export const getCategories = async () => {
   try {
     const response = await axios.get(`${API_BASE_URL}`);
