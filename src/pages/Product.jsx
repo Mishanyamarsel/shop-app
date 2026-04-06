@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getProductById } from '../services/api';
+import { useCart } from '../context/CartContext';
 
 function Product() {
   // Получаем id товара из URL (например, /product/5 → id = "5")
   const { id } = useParams();
+  const { addToCart } = useCart();
   
   // Хук для навигации (кнопка "Назад")
   const navigate = useNavigate();
@@ -80,7 +82,7 @@ function Product() {
         {/* Левая колонка: картинка */}
         <div style={{ flex: 1, minWidth: '300px' }}>
           <img 
-            src={product.image} 
+            src={product.images ? product.images[0] : product.thumbnail} 
             alt={product.title}
             style={{ width: '100%', maxWidth: '400px', objectFit: 'contain' }}
           />
@@ -97,6 +99,7 @@ function Product() {
             Категория: {product.category}
           </p>
           <button 
+          onClick={() => addToCart(product)}
             style={{
               marginTop: '30px',
               backgroundColor: '#ae5656',

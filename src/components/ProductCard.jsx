@@ -12,7 +12,7 @@ function ProductCard({ product }) {
       verticalAlign: 'top'
     }}>
       <img 
-        src={product.image} 
+        src={product.thumbnail} 
         alt={product.title}
         style={{ width: '100%', height: '200px', objectFit: 'contain' }}
       />
