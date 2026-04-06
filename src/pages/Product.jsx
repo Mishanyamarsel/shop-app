@@ -3,6 +3,38 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getProductById } from '../services/api';
 import { useCart } from '../context/CartContext';
 
+// Перевод категорий на русский
+const categoryTranslations = {
+  'beauty': 'Косметика',
+  'fragrances': 'Парфюмерия',
+  'furniture': 'Мебель',
+  'groceries': 'Продукты',
+  'home-decoration': 'Декор',
+  'kitchen-accessories': 'Кухонные принадлежности',
+  'laptops': 'Ноутбуки',
+  'mens-shirts': 'Мужские рубашки',
+  'mens-shoes': 'Мужская обувь',
+  'mens-watches': 'Мужские часы',
+  'mobile-accessories': 'Аксессуары для телефонов',
+  'motorcycle': 'Мотоциклы',
+  'skin-care': 'Уход за кожей',
+  'smartphones': 'Смартфоны',
+  'sports-accessories': 'Спортивные аксессуары',
+  'sunglasses': 'Солнцезащитные очки',
+  'tablets': 'Планшеты',
+  'tops': 'Верхняя одежда',
+  'vehicle': 'Транспорт',
+  'womens-bags': 'Женские сумки',
+  'womens-dresses': 'Женские платья',
+  'womens-jewellery': 'Украшения',
+  'womens-shoes': 'Женская обувь',
+  'womens-watches': 'Женские часы'
+};
+
+const translateCategory = (category) => {
+  return categoryTranslations[category] || category;
+};
+
 function Product() {
   // Получаем id товара из URL (например, /product/5 → id = "5")
   const { id } = useParams();
@@ -96,7 +128,7 @@ function Product() {
             ${product.price}
           </p>
           <p style={{ color: '#1e2749', marginTop: '10px' }}>
-            Категория: {product.category}
+            Категория: {translateCategory(product.category)}  {/* ← ТОЛЬКО ЭТО ИЗМЕНИЛОСЬ */}
           </p>
           <button 
           onClick={() => addToCart(product)}

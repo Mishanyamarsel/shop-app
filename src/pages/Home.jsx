@@ -92,43 +92,53 @@ function Home() {
     <div style={{ 
       backgroundColor: 'rgb(180, 186, 192)',
       minHeight: '100vh',
-      padding: '40px 0'
+      padding: '20px 0'
     }}>
-      <h1 style={{ 
-        textAlign: 'center', 
-        marginBottom: '30px',
-        color: '#f5f1f1',
-        fontSize: '40px'
-      }}>
-        Товары
-      </h1>
-      
+      {/* Заголовок и фильтры в одной строке */}
       <div style={{ 
         display: 'flex', 
-        flexWrap: 'wrap', 
-        justifyContent: 'center', 
-        gap: '10px',
-        marginBottom: '30px',
-        padding: '0 20px'
+        alignItems: 'center', 
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        gap: '15px',
+        padding: '0 20px',
+        marginBottom: '20px'
       }}>
-        {categories.map(category => (
-          <button
-            key={category}
-            onClick={() => setSelectedCategory(category)}
-            style={{
-              padding: '8px 16px',
-              backgroundColor: selectedCategory === category ? '#2c3e50' : '#6a918a',
-              color: 'white',
-              border: 'none',
-              borderRadius: '20px',
-              cursor: 'pointer'
-            }}
-          >
-            {translateCategory(category)}
-          </button>
-        ))}
+        <h1 style={{ 
+          margin: 0,
+          color: '#f5f1f1',
+          fontSize: '32px'
+        }}>
+          Товары
+        </h1>
+        
+        <div style={{ 
+          display: 'flex', 
+          flexWrap: 'wrap', 
+          gap: '8px'
+        }}>
+          {categories.map(category => (
+            <button
+              key={category}
+              onClick={() => setSelectedCategory(category)}
+              style={{
+                padding: '6px 14px',
+                fontSize: '14px',
+                backgroundColor: selectedCategory === category ? '#2c3e50' : '#6a918a',
+                color: 'white',
+                border: 'none',
+                borderRadius: '20px',
+                cursor: 'pointer',
+                transition: 'all 0.3s'
+              }}
+            >
+              {translateCategory(category)}
+            </button>
+          ))}
+        </div>
       </div>
       
+      {/* Контейнер с карточками */}
       <div style={{ 
         display: 'flex', 
         flexWrap: 'wrap', 
